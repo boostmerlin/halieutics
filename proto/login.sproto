@@ -1,0 +1,57 @@
+.package {
+    type 0 : integer
+    session 1 : integer
+}
+
+.Err {
+    code 0 : integer 
+    msg 1 : string
+}
+
+login 1 {
+    request { 
+        .Info {
+            code 0 : string  #deviceid, uid, for guest, user_name:password
+            codetype 1 : integer # 1 for code, 2 for rtk
+        }
+
+        app 0 : string  #app name, like fish
+        platform 1 : string  #platform , like ios, android
+        type 2 : string         # weixin | guest
+        version 3 : integer  #app version
+        info 4 : Info        
+    }
+    response {
+        .Account {
+            uname 0 : string
+            head 1 : string
+            sex 2 : integer
+        }
+        .User {
+            id 0 : integer 
+            secret 1 : string
+            rtk 2 : string  #refresh_token
+        }
+        .Server {
+            ip 0 : string
+            port 1 : integer 
+        }
+
+        err 0 : Err
+        account 1 : Account
+        user 2 : User
+        server 3 : Server
+    }
+}
+
+appleswitch 2 {
+    request {
+        ver 0 : string
+        app 1 : string # fish
+    }
+    response {
+        ver 0 : string
+        stat 1 : integer
+        err 2 : Err
+    }
+}

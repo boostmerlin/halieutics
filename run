@@ -1,0 +1,44 @@
+#!/bin/sh
+export ROOT=$(cd `dirname $0`; pwd)
+export SKYNET_EXEC=$ROOT/skynet/skynet
+
+while getopts "e:Dktr:" arg
+do
+	case $arg in
+        e)
+            . ./$OPTARG
+            ;;
+		D)
+			export DAEMON=true
+			;;
+		k)
+			if [ -f $PIDFILE ] 
+			then
+				kill `cat $PIDFILE`
+			fi
+			exit 0;
+			;;
+        t)
+            IS_TAIL_LOGFILE=true
+            ;;
+        r)	
+			echo robot mode:  $@
+			export SIMULATOR="$5"
+			export ROBOT_MODE="$OPTARG:1"
+			;;
+	esac
+done
+
+$SKYNET_EXEC $CONFIG
+
+if [ $DAEMON -a ! -d $LOGPATH ]
+then
+    mkdir $LOGPATH
+fi
+
+if [ $IS_TAIL_LOGFILE ]
+then
+    sleep 1
+    tail -f $LOGFILE
+fi
+

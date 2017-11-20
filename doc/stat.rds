@@ -1,0 +1,52 @@
+#date format : yyyymmdd
+
+user {
+    user:[yyyymm]:count
+        [day] number
+    user:[class]:count
+        [day] number
+    user:[class]:[yyyymm]:count
+        [day] number
+}
+
+game {
+    game:count
+    game:[yyyymm]:count
+        [day] number
+    game:[game]:count
+    game:[game]:[yyyymm]:count
+        [day] number
+}
+
+desk {
+    desk:count
+    desk:[yyyymm]:count
+        [day] number
+    desk:[game]:count
+    desk:[game]:[yyyymm]:count
+        [day] number
+    desk:[game]:[yyyymmdd]:count
+        [hour] number
+    desk:[game]:[date]:all list(string(deskid:guid))
+}
+
+card {
+    card:count
+    card:[yyyymm]:count
+        [day] number
+    card:[game]:count
+    card:[game]:[yyyymm]:count
+        [day] number
+}
+
+online {
+    online:[class]
+        json {
+            [platform] number
+        }
+    online:[class]:[yyyymmdd] map
+        [hh:mm] json {
+            [platform] number
+        }
+}
+

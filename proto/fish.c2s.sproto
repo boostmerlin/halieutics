@@ -1,0 +1,427 @@
+.package {
+    type 0 : integer 
+    session 1 : integer
+}
+
+.Err {
+    code 0 : integer    # 错误码
+    msg 1 : string      # 错误消息
+}
+
+.Dismiss {
+    applyer 0 : integer     # 解散申请者座位号
+    cd 1 : integer          # 解散倒计时
+    replies 2 : *integer    # 已经同意的玩家座位号
+}
+
+.Roominfo {
+     timelimit 0 : integer     # 时间
+     aapay 1 : boolean     # 是否是AA支付
+     cannonscore 2 : integer #炮分1, 2
+ }
+
+##########################
+#      lobby protocol
+##########################
+
+signout 1 {}    #登出
+
+# 个人信息
+userinfo 2 {
+    response {
+        uid 0 : integer      # 用户id
+		nick 1 : string     # 昵称
+		head 2 : string     # 头像
+		sex 3 : integer     # 性别  (1:男 2:女 0:未知)
+		diamond 4 : integer #房卡
+		phone 5 : string    # 电话 空为未绑定
+        recode 6 : string  #
+    }
+}
+
+# 总战绩
+total 3 {
+    response {
+        .OneGame {
+            .OnePlayer {
+                id 0 : integer
+                nick 1 : string
+                score 2 : integer
+                head 3 : string
+            }
+            appname 0 : string
+            deskid 1 : integer
+            time 2 : integer
+            users 3 : *OnePlayer
+        }
+        mygames 0 : *OneGame
+    }
+}
+
+# 心跳,定时10s发送心跳包
+heartbeat 4 {
+    response {
+        now 0 : integer     # 服务器当前时间戳
+    }
+}
+
+# 获取我的桌子
+# 当每次登录成功后获取
+mydesk 5 {
+    response {
+        active 0 : integer      # 如果有此值,说明有房卡游戏正在进行,我需要断线重连进入游戏场景: sitdown => sceneinfo
+    }
+}
+
+# 账户信息
+# 主要获取用户的货币信息
+account 6 {
+    response {
+        diamond 1 : integer #房卡
+    }
+}
+
+# 创建房间
+create 7 {
+    request {
+        game 0 : string     # 游戏名称 fish
+        info 1 : Roominfo
+        robotmode 2 : integer
+        roomtype 3 : integer
+    }
+    response {
+        err 0 : Err
+        deskid 1 : integer 
+    }
+}
+
+
+# 加入房间
+# 加入房间成功后: sitdown => sceneinfo
+join 8 {
+    request {
+        deskid 0 : integer      # 桌子号(房间号)
+    }
+    response {
+        err 0 : Err
+        ok 1 : boolean  
+    }
+}
+
+# 入座
+# 在创建桌子, 加入房间成功, mydesk.active 这三种时候发送此协议
+sitdown 9 {
+    request {
+        deskid 0 : integer
+        seat 1 : integer
+    }
+    response {
+        .Deskmate {
+            id 0 : integer
+            nick 1 : string
+            head 2 : string
+            sex 3 : integer
+            seat 4 : integer
+            master 5 : boolean
+            ip 6 : string
+            ready 7 : boolean
+        }
+        err 0 : Err
+        seat 1 : integer
+        ip 2 : string
+       # deskmates 3 : *Deskmate 
+    }
+}
+
+# 站起
+standup 10 {
+    response {
+        err 0 : Err
+        ok 1 : boolean
+    }
+}
+
+
+
+###########
+#   商城
+###########
+shop 11 {
+    request {
+        name 0 : string     # 商城名称 diamond, 只有房卡
+    }
+    response {
+        .ShopItem {
+            id 0 : string      # 商品id 
+            prop 1 : string     # 道具, diamond
+            num 2 : integer     # 数量
+            price 3 : integer   # 价格
+        }
+        items 0 : *ShopItem
+    }
+}
+
+# 购买
+buy 12 {
+    request {
+        name 0 : string     # 商城名称 diamond, 只有房卡
+        id 1 : string      # 商品id
+    }
+    response {
+        err 0 : Err
+        ok 1 : boolean
+        reason 2 : string
+    }
+}
+
+
+# 解散申请
+dismiss_apply 13 {
+    response {
+        err 0 : Err         # 申请失败会有错误信息,否则nil 
+        wait 1 : integer    # 在桌子wait状态时,房主直接解散桌子wait=0, 在ready和gaming状态房主或玩家解散桌子需要其他玩家同意,wait=解散超时
+        resp 2 : string     # 在房主直接解散桌子时会返回此值,一般时提示房主房间解散
+    }
+}
+
+# 解散答复
+# 在有玩家提出解散申请时(除房主可以直接解散房间的情况),另外的玩家会收到服务器推送的dismiss_apply_other
+# 此时玩家需要同意/拒绝申请
+dismiss_reply 14 {
+    request {
+        agree 0 : boolean   # 同意true|拒绝false
+    }
+    response {
+        err 0 : Err
+        ok 1 : boolean      # 成功true, 失败nil看err
+    }
+}
+
+# 准备
+# 收到服务器推送收到sceneinfo时
+# 发送此协议, 如果是房主，表示开始
+ready 15 {
+    response {
+        err 0 : Err     # 当前有玩家未准备
+        ok 1 : boolean      # 准备ok
+    }
+}
+
+# 抢庄环节
+grab_banker 16 {
+	request {
+        grabbed 0 : boolean
+    }
+	response {
+		ok 0 : boolean      # 准备ok
+        resp 1 : string     # 
+	}
+}
+
+# 游戏中聊天
+chat 17 {
+    request {
+		fromid 0 : integer          # 用户id
+		toid 1 : integer          # 目标，-1广播
+        type 2 : string         # 聊天类型,这个由客户端自定义,服务器只负责转发
+        content 3 : string      # 聊天内容,可能是表情类别，官户端自定义
+    }
+    response {
+        err 0 : Err
+        ok 1 : boolean
+    }
+}
+
+
+# 获取桌子信息
+# 正常入座,还是断线重连入座,首先获取桌子信息
+sceneinfo 18 {
+    response {
+            #桌内信息
+        .User {
+            id 0 : integer          # 用户id
+            nick 1 : string         # 昵称
+            head 2 : string         # 头像
+            sex 3 : integer         # 性别
+            seat 4 : integer        # 座位号
+            master 7 : boolean      # 是否是房主
+            afk 8 : boolean         # 是否离线, 离线为true, 否则为false/nil
+            score 9 : integer       # 游戏分数
+            ip 10 : string          # ip
+            ready 11 : boolean  
+            audience 12 : boolean   #  旁观
+        }
+        bankerseat 0 : integer
+        state 1 : string    #ready:等待玩家准备 | banker | gamerun | gameend:游戏中
+        users 2 : *User
+        dismiss 3 : Dismiss # 如果当前桌子正在解散,则此为解散信息,否则nil
+
+        .Fish {
+            kind 0 : integer # 鱼类型
+            id 1 : integer 
+            timealive 2 : integer
+            .Point {
+                x 0 : integer
+                y 1 : integer
+            }
+            init_pos 3 : *Point
+        }
+
+        .Bullet {
+            kind 0 : integer
+            id 1 : integer
+            timealive 2 : integer
+            angle 3 : integer
+        }
+
+        fishes 4 : *Fish
+        bullets 5 : *Bullet
+        err 6 : Err
+        timelimit 7 : integer
+        timeleft 8 : integer
+    }
+}
+
+# leave room 
+leave 19 {
+    response {
+        err 0 : Err
+        ok 1 : boolean
+    }
+}
+
+# start with 21.
+# 获取系统公告
+# 客户端每次登录后或断线重连后获取才能发送
+# 每次收到response后再次获取,服务器如果没有新公告会挂起这个request
+# 直到有新的公告才会response,如此反复. 
+# 相当于多个公告分页，不然可能超过消息长度
+notice 21 {
+    request {
+        lastid 0 : integer      # 客户端保存的最新的公告id, 第一次请求为0
+    }
+    response {
+        .NoticeItem {
+            color 0 : integer   # 公告颜色
+            content 1 : string  # 内容
+            time 2 : integer  # time as
+            type 3 : integer # 1 for system, 2 for marquee
+        }
+        lastid 0 : integer      # 获取后服务器推给客户端最新的公告id, 客户端下次请求用
+        items 1 : *NoticeItem 
+    }
+}
+
+shareinfo 22 {
+    response {
+        stitle 0 : string
+        scontent 1 : string
+        surl 2 : string
+        ititle 3 : string
+        icontent 4 : string
+        iurl 5 : string
+    }
+}
+
+
+# 绑定邀请
+invite_bind 23 {
+    request {
+        recode 0 : string
+    }
+    response {
+        err 0 : Err
+        ok 1 : boolean
+    }
+}
+
+#订单查询信息
+payorders 24 {
+    request {
+
+    }
+    response {
+        .Order {
+            orderid  0 : string
+            prop 1 : string
+            num 2 : integer
+            price 3 : integer
+            timestamp 4 : integer
+            status 5 : string
+        }
+
+        orders 0 : *Order
+    }
+}
+
+#desk列表 
+desklist 25 {
+    response {
+        .Room {
+            id 0 : integer
+            timestamp 1 : integer
+            master 2 : integer
+            usern 3 : integer
+            aapay 4 : boolean
+            cannonscore 5 : integer
+            timelimit 6 : integer
+            roomtype 7 : integer
+        }
+        rooms 0 : *Room
+    }
+}
+
+deskinfo 26 {
+    request {
+        deskid 0 : integer
+    }
+    response {
+        err 0 : Err
+        info 1 : Roominfo
+        cost 2 : integer
+        time 3 : integer
+    }
+}
+
+gamerun 27 {}
+
+###########
+#   游戏  
+###########
+
+# 开火
+userfire 28 {
+    request {
+        bullet_kind 0 : integer
+        angle 1 : integer
+        lock_fishid 2 : integer
+     #  fire_code 3 : integer
+     #   wUnkTime 4 : integer
+    }
+    response {
+        err 0 : Err
+        ok 1 : boolean
+    }
+}
+
+# hited one 
+catchfish 29 {
+    request {
+        seat_id 0 : integer
+        fish_id 1 : integer
+        bullet_kind 2 : integer        #子弹种类
+        bullet_id 3 : integer 
+      #  bullet_multiply 4 : integer #子弹倍数
+      #  catch_code 5 : integer 
+    }
+
+}
+
+# hit more
+catchsweepfish 30 {
+    request {
+        seat_id 0 : integer
+        fish_id 1 : integer
+        catch_fish_ids 2 : *integer
+    }
+}

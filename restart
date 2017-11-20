@@ -1,0 +1,58 @@
+#!/bin/sh
+
+##########
+# notice #
+##########
+if [ $# -ge 3 ]
+then
+    if [ $1 == "notice" ]
+    then
+        COUNTDOWN=$2
+        INTVAL=$3
+
+        while [ $COUNTDOWN -gt 0 ]
+        do
+            echo "restart after $COUNTDOWN sec"
+            min=`expr $COUNTDOWN / 60`
+            sec=`expr $COUNTDOWN % 60`
+            if [ $min -gt 0 ]
+            then
+                if [ $sec -gt 0 ]
+                then
+                    str=`printf "%d分%d秒" $min $sec`
+                else
+                    str=`printf "%d分钟" $min`
+                fi
+            else
+                str=`printf "%d秒" $sec`
+            fi
+            redis-cli -p 8805 rpush notice:broadcast '{"type":"message","msg":"服务器将于【'${str}'】后重启"}'
+            redis-cli -p 8805 publish notice.broadcast all
+            sleep $INTVAL
+            COUNTDOWN=`expr $COUNTDOWN - $INTVAL`
+        done
+    fi
+fi
+
+############
+# shutdown #
+############
+redis-cli -p 8805 publish shutdown.ready ok
+sleep 2
+redis-cli -p 8805 publish shutdown.done ok
+
+###########
+# restart #
+###########
+LOGFILE=/var/log/esmj/skynet-esmj.log
+
+./run -e env -k
+sleep 1
+
+if [ -f $LOGFILE ]
+then
+    mv $LOGFILE $LOGFILE.old
+fi
+
+./run -e env -D -t
+

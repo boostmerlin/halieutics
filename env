@@ -1,0 +1,24 @@
+#!/bin/sh
+echo "export env"
+export SKYNET_PATH=$ROOT/skynet
+export SKYNET_THREAD=8
+
+export SERVER_NAME=skynet-fish
+export CONFIG=$ROOT/config
+
+export DAEMON=false
+export LOGLEVEL=debug
+export LOGPATH=/var/log/fish
+export PIDFILE=$LOGPATH/$SERVER_NAME.pid
+export LOGFILE=$LOGPATH/$SERVER_NAME.log
+
+export SYS_CONFIG_FILE=$ROOT/conf/sysconf.lua
+export APP_CONFIG_PATH=$ROOT/conf/app
+export GAME_CONIFIG_PATH=$ROOT/gamecfg/fish
+
+export REDIS_SCRIPT_PATH=$ROOT/service/db/script
+export PROTO_PATH=$ROOT/proto
+
+export AGENT_LOAD=32
+export DESK_LOAD=8
+

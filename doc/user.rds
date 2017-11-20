@@ -1,0 +1,83 @@
+# this db is cluster by userid
+# selectdb => userid % db.num + 1
+# index = math.floor(userid/1024)
+
+# game user info 
+user:[index]:info
+    [userid] string(json) {
+        nick string
+        head string
+        sex number
+        sign string
+        time number 
+    }
+
+user:[index]:version
+    [userid] number
+
+user:[index]:vip
+    [userid] number
+
+user:[index]:phone
+    [userid] string
+
+# create
+user:[index]:active:desk   # index = math.floor(userid/1024)
+    [userid] number(deskid)
+
+#user created desk.
+user:[userid]:create:desk set(deskid)
+
+# prop
+user:[userid]:bag map
+    [prop.id] number
+
+# sign
+user:[index]:rookie:sign
+    [userid] json {
+        [days...]
+    }
+
+user:[index]:normal:sign
+    [userid] json {
+        num number
+        time number
+    }
+
+# mail
+mail:id:counter number
+mail:[index]:info map
+    [mail.id] json {
+        from number
+        time number
+        caption string
+        content string
+        attach string
+    }
+
+user:[userid]:mail:sys  number
+user:[userid]:mail:list zset    # SCORE: time, VALUE: mail.id 
+
+# invite
+user:[index]:invite:parent map
+    [user.id] [parent.id]
+user:[userid]:invite:children zset(user.id)
+
+# mark
+umark:[userid]:[type] map   # once
+umark:[userid]:[type]:[yyyymmdd] map    # day
+umark:[userid]:[type]:[yyyyww] map      # week
+umark:[userid]:[type]:[yyyymm] map      # month
+
+# record
+urecord:[userid] map   # once
+urecord:[userid]:[yyyymmdd]:[hh] map    # hour
+urecord:[userid]:[yyyymmdd] map         # day
+urecord:[userid]:[yyyyww] map           # week
+urecord:[userid]:[yyyymm] map           # month 
+
+# cache ranking
+ranking:[type]:[yyyyww]:[index]
+    [userid]    json
+
+

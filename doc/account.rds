@@ -1,0 +1,44 @@
+
+account {
+    account:guid number
+    account:id:counter number
+
+    # index = hash(username) % 10000
+    # subindex = 1, 2, 3, ...
+    # hash.max = 1024
+    account:[index]:[subindex]:id
+        [username] number
+    
+    # index = math.floor(account.id/1024)
+    account:[index]:base
+        [account.id] json {
+            uname string
+            pwd string      # md5(md5(username .. password)..salt)
+            salt string
+            time number
+        }
+
+    account:[index]:third
+        [account.id] json {
+            name string
+            uid string
+            info {   # every thirdparty maybe diffrent
+            }
+        }
+
+    account:[index]:uinfo
+        [account.id] json {
+            nick string
+            head string
+            sex number
+            ...
+        }
+
+    # index = hash(3rd.uid) % 10000
+    # subindex 1, 2, 3, ...
+    # hash.max = 1024
+    acc3rd:[3rd]:[index]:[subindex]
+        [3rd.uid] number(account.id)
+
+}
+

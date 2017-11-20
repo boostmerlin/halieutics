@@ -1,0 +1,53 @@
+# this is a game manager db
+
+recharge {
+    recharge:order:untreated set(order.id)
+    recharge:order:treated set(order.id)
+    recharge:order:error list(json)
+        json {
+            id number
+            reason string
+        }
+
+    appstore:order:id:counter number
+    test:order:id:counter number
+
+    recharge:order:[id] map
+        userid number
+        app string
+        count number
+        time number
+
+    # channel
+    recharge.new [order.id]
+
+    # usage:
+        sadd recharge:order:untreated [order.id]
+        publish recharge.new [order.id]
+}
+
+notice {
+    notice:[class]:broadcast list(json)
+}
+
+activity {
+    act:notice:id:counter number
+
+    act:notice:[id]
+        class string
+        type string
+        content string
+        expire number
+
+    act:[class]:notice set(notice.id)
+
+    # channel
+    activity.new_notice [notice.id]
+
+    # usage:
+        incr act:notice:id:counter
+        hmset act:notice:[id]
+        sadd act:[class]:notice [id]
+        publish activity.new_notice [notice.id] 
+}
+

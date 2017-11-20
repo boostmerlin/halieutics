@@ -1,0 +1,23 @@
+.package {
+    type 0 : integer
+    session 1 : integer
+}
+
+.Err {
+    code 0 : integer 
+    msg 1 : string
+}
+
+signin 1 {
+    request {
+        userid 0 : integer 
+        secret 1 : string
+    }
+    response {
+        err 0 : Err
+        ok 1 : boolean
+    }
+}
+
+transfer 2 {}
+

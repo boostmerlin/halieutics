@@ -1,0 +1,12 @@
+*.o
+*.a
+*.so
+*.log
+*.html
+*.htm
+skynet/skynet
+/cservice
+/luaclib
+*.dSYM
+.DS_Store
+.svn

@@ -1,0 +1,36 @@
+skynet_lualib_path = "$SKYNET_PATH/lualib/?.lua"
+skynet_luaclib_path = "$SKYNET_PATH/luaclib/?.so"
+skynet_service_path = "$SKYNET_PATH/service/?.lua"
+skynet_cservice_path = "$SKYNET_PATH/cservice/?.so"
+
+service_root = "$ROOT/service/"
+common_service_path = service_root.."?.lua;"..service_root.."?/main.lua;"..service_root.."common/?.lua"
+game_service_path = service_root.."game/?.lua"
+gm_service_path = service_root.."gm/?.lua"
+db_service_path = service_root.."db/?.lua"
+u3d_service_path = service_root.."user3rd/?.lua"
+
+thread = $SKYNET_THREAD 
+logpath = "$LOGPATH"
+loglevel = "$LOGLEVEL"
+harbor = 0
+--start = "main"
+lualoader = "$ROOT/skynet/lualib/loader.lua"
+luaservice = common_service_path..";"..game_service_path..";"..gm_service_path..";"..db_service_path..";"..u3d_service_path..";"..skynet_service_path
+lua_path = "$ROOT/lualib/?.lua;".."$ROOT/game/?.lua;$ROOT/game/?/init.lua;"..skynet_lualib_path
+lua_cpath = "$ROOT/luaclib/?.so;".."$ROOT/game/luaclib/?.so;"..skynet_luaclib_path
+cpath = "$ROOT/cservice/?.so;"..skynet_cservice_path
+if $DAEMON then
+	logger = "$LOGFILE" 
+	daemon = "$PIDFILE"
+end
+
+agent_load = $AGENT_LOAD
+desk_load = $DESK_LOAD
+
+sys_config_file = "$SYS_CONFIG_FILE"
+app_config_path = "$APP_CONFIG_PATH"
+proto_path = "$PROTO_PATH"
+redis_script_path = "$REDIS_SCRIPT_PATH"
+game_config_path = "$GAME_CONIFIG_PATH"
+

@@ -1,0 +1,222 @@
+.package {
+    type 0 : integer
+    session 1 : integer
+}
+
+.ScoreUser {
+    seat 0 : integer
+    score 1 : integer    #
+}
+#广播
+other_ready 1 {
+    request { seat 0 : integer }
+}
+
+#向所有玩家通知游戏开始
+gamestart 2 {
+    request {
+        timeout 0 : integer
+    }
+}
+
+#结束后的分值统计
+gameover 3 {
+    request {
+        users 0 : *ScoreUser
+        time 1 : integer
+    }
+}
+
+
+#离线状态
+userstate 5 {
+    request {
+        seat 0 : integer
+        afk 1 : boolean
+        userid 2 : integer
+    }
+}
+
+other_dismiss_apply 6 {
+    request {
+        applyer 0 : integer     # 申请解散玩家座位号
+        cd 1 : integer
+    }
+}
+
+other_dismiss_reply 7 {
+    request {
+        replyer 0 : integer     # 回复解散玩家座位号
+        agree 1 : boolean
+    }
+}
+
+dismiss 8 { #解散确认
+    request {
+        reason 0 : string
+    }
+}
+
+buy_notice 9 {
+    request {
+        ok 0: boolean
+        reason 1 : string
+    }
+}
+
+#更换庄家
+change_banker 10 {
+	request {
+		seatid 0 : integer
+        candidates 1 : *integer
+        last 2 : integer
+	}
+}
+
+
+update_account 11 {
+    request {
+        diamond 0 : integer
+    }
+}
+
+#update_account 11 {
+#    request {
+#        .Prop {
+#            prop 0 : string
+#            num 1 : integer
+#        }
+#        props 0 : *Prop
+#    }
+#}
+
+
+deskmate 12 {
+    request {
+        id 0 : integer
+        nick 1 : string
+        head 2 : string
+        sex 3 : integer
+        seat 4 : integer #always -1 when join
+        master 5 : boolean
+        ip 6 : string
+        audience 7 : boolean #is audience
+    }
+}
+
+other_standup 13 {
+    request {
+        seat 0 : integer
+        masterid 1 : integer
+        masterseat 2 : integer
+    }
+}
+
+other_leave 14 {
+    request {
+        userid 0 : integer
+    }
+}
+
+# 游戏中聊天
+other_chat 17 {
+    request {
+        fromid 0 : integer          # 用户id
+        toid 1 : integer          # 目标
+        type 2 : string         # 聊天类型,这个由客户端自定义,服务器只负责转发
+        content 3 : string      # 聊天内容,可能是表情类别，官户端自定义
+    }
+}
+
+# 抢庄后庄家随机效果完成后，客户端通知。５秒后超时
+game_do_run 18 {}
+
+setscoresame 19 {
+    request {
+        scoreinfo 0 : *ScoreUser
+    }
+}
+
+#gamestatus 20 {
+#    request {
+#        users 0 : *ScoreUser
+#    }
+#}
+
+gameconfig 21 {
+    request {
+        max_bullet_multiple 0 : integer
+
+        .Bomb {
+            kind 0 : integer
+            range_w 1 : integer
+            range_h 2 : integer
+        }
+
+        bomb 1 : Bomb
+
+        .Fish {
+            multiple 0 : integer
+            multiplemax 1 : integer
+            speed 2 : integer
+            kind 3 : integer
+            name 4 : string
+        }
+
+        fishcfg 2 : *Fish
+        .Bullet {
+            speed 0 : integer
+            netRadius 1 : integer
+            name 2 : string
+            kind 3 : integer
+        }
+
+        bulletcfg 3 : *Bullet
+    }
+}
+
+fishtrace_bbc 22 {
+    request {
+        .Point {
+            x 0 : integer
+            y 1 : integer
+        }
+
+        init_pos 0 : *Point
+        fish_kind 1 : integer
+        fish_id 2 : integer
+        trace_type 3 : integer # 0 TRACE_LINEAR, 1. TRACE_BEZIER
+    }
+
+}
+
+userfire_bbc 23 {
+    request {
+        bullet_kind 0 : integer
+        bullet_id 1 : integer            #子弹ID
+        seat_id 2 : integer              #椅子ID
+        android 3 : boolean
+        angle 4 : integer
+        bullet_multiply 5 : integer
+        lock_fishid 6 : integer        #锁鱼ID
+        androidid 7 : integer
+    }
+}
+
+catchfish_bbc 24 {
+    request {
+        seat_id 0 : integer           #椅子ID
+        fish_id 1 : integer            #鱼ID
+        fish_kind 2 : integer          #鱼种类
+        fish_score 3 : integer         #鱼分数
+    }
+}
+
+catchsweepfish_bbc 25 {
+    request {
+      seat_id 0 : integer
+      fish_id 1 : integer
+      fish_score 2 : integer
+      catch_fish_ids 3 : *integer
+    }
+}

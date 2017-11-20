@@ -1,0 +1,457 @@
+{
+    "Cannon": {
+        "cannonMaxMultiple": 3,
+        "_comment": "炮的倍数"
+    },
+    "Bomb": {
+        "kind": 22,
+        "range_w": 800,
+        "range_h": 800
+    },
+    "Stock":[
+        {
+            "value":0,
+            "prob":0
+        },
+        {
+            "value":400000,
+            "prob":0.2
+        },
+        {
+            "value":500000,
+            "prob":0.3
+        },   
+        {
+            "value":600000,
+            "prob":0.4
+        }, 
+        {
+            "value":700000,
+            "prob":0.5
+        }, 
+        {
+            "value":800000,
+            "prob":0.6
+        },
+        {
+            "value":1000000,
+            "prob":1
+        }, 
+        {
+            "value":1200000,
+            "prob":1.2
+        },
+        {
+            "value":1300000,
+            "prob":1.3
+        }, 
+        {
+            "value":1500000,
+            "prob":1.8
+        }
+    ],
+    "Fish": [
+        {
+            "kind": 0,
+            "name": "蜗牛鱼",
+            "speed": 5,
+            "multiple": 2,
+            "bbox_w": 55,
+            "bbox_h": 15,
+            "count": 2,
+            "elapsed": 5,
+            "countMax": 3,
+            "probability": 0.25
+        },
+        {
+            "kind": 1,
+            "name": "绿草鱼",
+            "speed": 5,
+            "multiple": 2,
+            "count": 2,
+            "elapsed": 5,
+            "countMax": 3,
+            "bbox_w": 60,
+            "bbox_h": 25,
+            "probability": 0.25
+        },
+        {
+            "kind": 2,
+            "name": "黄草鱼",
+            "speed": 5,
+            "multiple": 3,
+            "bbox_w": 80,
+            "bbox_h": 32,
+            "count": 3,
+            "elapsed": 5,
+            "countMax": 4,
+            "probability": 0.167
+        },
+        {
+            "kind": 3,
+            "name": "大眼鱼",
+            "speed": 5,
+            "multiple": 4,
+            "count": 2,
+            "elapsed": 6,
+            "countMax": 3,
+            "bbox_w": 70,
+            "bbox_h": 43,
+            "probability": 0.125
+        },
+        {
+            "kind": 4,
+            "name": "黄扁鱼",
+            "speed": 5,
+            "multiple": 5,
+            "count": 1,
+            "bbox_w": 80,
+            "bbox_h": 54,
+            "elapsed": 10,
+            "countMax": 3,
+            "probability": 0.1
+        },
+        {
+            "kind": 5,
+            "name": "小丑鱼",
+            "speed": 5,
+            "multiple": 6,
+            "count": 2,
+            "bbox_w": 90,
+            "bbox_h": 70,
+            "elapsed": 10,
+            "countMax": 3,
+            "probability": 0.0833
+        },
+        {
+            "kind": 6,
+            "name": "小刺鱼",
+            "speed": 5,
+            "multiple": 7,
+            "count": 2,
+            "bbox_w": 90,
+            "bbox_h": 40,
+            "elapsed": 8,
+            "countMax": 3,
+            "probability": 0.0715
+        },
+        {
+            "kind": 7,
+            "name": "蓝鱼儿",
+            "speed": 5,
+            "multiple": 8,
+            "count": 1,
+            "bbox_w": 120,
+            "bbox_h": 55,
+            "elapsed": 9,
+            "countMax": 3,
+            "probability": 0.0625
+        },
+        {
+            "kind": 8,
+            "name": "灯笼鱼",
+            "speed": 5,
+            "multiple": 9,
+            "count": 1,
+            "bbox_w": 150,
+            "bbox_h": 47,
+            "elapsed": 11,
+            "countMax": 2,
+            "probability": 0.0555
+        },
+        {
+            "kind": 9,
+            "name": "海龟",
+            "speed": 5,
+            "multiple": 10,
+            "count": 1,
+            "bbox_w": 110,
+            "bbox_h": 112,
+            "elapsed": 13,
+            "countMax": 2,
+            "probability": 0.05
+        },
+        {
+            "kind": 10,
+            "name": "神仙鱼",
+            "speed": 4,
+            "multiple": 12,
+            "count": 1,
+            "bbox_w": 145,
+            "bbox_h": 80,
+            "elapsed": 12,
+            "countMax": 2,
+            "probability": 0.0415
+        },
+        {
+            "kind": 11,
+            "name": "蝴蝶鱼",
+            "speed": 4,
+            "multiple": 15,
+            "count": 1,
+            "bbox_w": 120,
+            "bbox_h": 150,
+            "elapsed": 13,
+            "countMax": 2,
+            "probability": 0.0333
+        },
+        {
+            "kind": 12,
+            "name": "剑鱼",
+            "speed": 4,
+            "multiple": 18,
+            "count": 1,
+            "elapsed": 16,
+            "countMax": 1,
+            "bbox_w": 180,
+            "bbox_h": 70,
+            "probability": 0.0277
+        },
+        {
+            "kind": 13,
+            "name": "魔鬼鱼",
+            "speed": 4,
+            "multiple": 20,
+            "bbox_w": 255,
+            "bbox_h": 88,
+            "count": 0,
+            "elapsed": 7,
+            "countMax": 2,
+            "probability": 0.025
+        },
+        {
+            "kind": 14,
+            "name": "小银鲨",
+            "speed": 4,
+            "multiple": 25,
+            "count": 0,
+            "bbox_w": 180,
+            "bbox_h": 180,
+            "elapsed": 9,
+            "countMax": 2,
+            "probability": 0.02
+        },
+        {
+            "kind": 15,
+            "name": "小金鲨",
+            "speed": 3,
+            "multiple": 30,
+            "bbox_w": 270,
+            "bbox_h": 80,
+            "count": 1,
+            "elapsed": 15,
+            "countMax": 1,
+            "probability": 0.0167
+        },
+        {
+            "kind": 16,
+            "name": "电鳗鱼",
+            "speed": 3,
+            "multiple": 40,
+            "bbox_w": 290,
+            "bbox_h": 90,
+            "count": 0,
+            "elapsed": 14,
+            "countMax": 1,
+            "probability": 0.0125
+        },
+        {
+            "kind": 17,
+            "name": "鲨鱼",
+            "speed": 3,
+            "multiple": 50,
+            "bbox_w": 500,
+            "bbox_h": 170,
+            "count": 1,
+            "elapsed": 30,
+            "countMax": 1,
+            "probability": 0.01
+        },
+        {
+            "kind": 18,
+            "name": "随机草",
+            "speed": 2,
+            "multiple": 10,
+            "multiplemax": 40,
+            "count": 0,
+            "bbox_w": 400,
+            "bbox_h": 100,
+            "elapsed": 7,
+            "probability": 0.03
+        },
+        {
+            "kind": 19,
+            "name": "飞鱼",
+            "speed": 1,
+            "multiple": 100,
+            "bbox_w": 404,
+            "bbox_h": 100,
+            "count": 1,
+            "elapsed": 40,
+            "countMax": 1,
+            "probability": 0.005
+        },
+        {
+            "kind": 20,
+            "name": "大鲨鱼",
+            "speed": 2,
+            "multiple": 200,
+            "count": 1,
+            "elapsed": 60,
+            "countMax": 1,
+            "bbox_w": 200,
+            "bbox_h": 245,
+            "probability": 0.0025
+        },
+        {
+            "kind": 21,
+            "name": "金龙",
+            "speed": 3,
+            "multiple": 300,
+            "count": 1,
+            "elapsed": 60,
+            "bbox_w": 180,
+            "bbox_h": 100,
+            "countMax": 1,
+            "probability": 0.00167
+        },
+        {
+            "kind": 22,
+            "name": "庄鱼",
+            "speed": 3,
+            "multiple": 100,
+            "multiplemax": 180,
+            "count": 0,
+            "elapsed": 30,
+            "bbox_w": 140,
+            "bbox_h": 140,
+            "countMax": 1,
+            "probability": 0.00333
+        },
+        {
+            "kind": 23,
+            "name": "超级炸弹",
+            "speed": 3,
+            "multiple": 0,
+            "count": 1,
+            "elapsed": 27,
+            "countMax": 1,
+            "bbox_w": 130,
+            "bbox_h": 130,
+            "probability": 0.0005
+        },
+        {
+            "kind": 24,
+            "name": "蓝鲨",
+            "speed": 4,
+            "multiple": 80,
+            "multiplemax": 120,
+            "count": 0,
+            "bbox_w": 340,
+            "bbox_h": 130,
+            "elapsed": 26,
+            "countMax": 2,
+            "probability": 0.005
+        },
+        {
+            "kind": 25,
+            "name": "金鲨",
+            "speed": 4,
+            "multiple": 150,
+            "multiplemax": 240,
+            "count": 0,
+            "bbox_w": 340,
+            "bbox_h": 130,
+            "elapsed": 190,
+            "countMax": 2,
+            "probability": 0.00277
+        },
+        {
+            "kind": 26,
+            "name": "大三元",
+            "speed": 4,
+            "multiple": 58,
+            "count": 0,
+            "elapsed": 100,
+            "bbox_w": 340,
+            "bbox_h": 130,
+            "probability": 0.0081
+        },
+        {
+            "kind": 27,
+            "name": "大四喜",
+            "speed": 4,
+            "multiple": 160,
+            "count": 0,
+            "elapsed": 270,
+            "bbox_w": 460,
+            "bbox_h": 130,
+            "probability": 0.003125
+        },
+        {
+            "kind": 28,
+            "name": "小三元",
+            "speed": 4,
+            "multiple": 28,
+            "bbox_w": 460,
+            "bbox_h": 130,
+            "count": 1,
+            "elapsed": 200,
+            "probability": 0.01777
+        }
+    ],
+    "Bullet": [
+        {
+            "kind": 0,
+            "name": "1炮筒",
+            "speed": 20,
+            "netRadius": 70,
+            "multiple": 1
+        },
+        {
+            "kind": 1,
+            "name": "2炮筒",
+            "speed": 20,
+            "netRadius": 100,
+            "multiple": 2
+        },
+        {
+            "kind": 2,
+            "name": "3炮筒",
+            "speed": 20,
+            "netRadius": 90,
+            "multiple": 3
+        },
+        {
+            "kind": 3,
+            "name": "4炮筒",
+            "speed": 20,
+            "netRadius": 70,
+            "multiple": 3
+        },
+        {
+            "kind": 4,
+            "name": "1炮筒能量炮",
+            "speed": 30,
+            "netRadius": 80
+        },
+        {
+            "kind": 5,
+            "name": "2炮筒能量炮",
+            "speed": 30,
+            "netRadius": 90
+        },
+        {
+            "kind": 6,
+            "name": "3炮筒能量炮",
+            "speed": 30,
+            "netRadius": 60
+        },
+        {
+            "kind": 7,
+            "name": "4炮筒能量炮",
+            "speed": 30,
+            "netRadius": 70
+        }
+    ]
+}

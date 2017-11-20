@@ -1,0 +1,22 @@
+{
+  "diamond": [
+    {
+      "id": "rc_pack_1",
+      "prop": "diamond",
+      "num": 3,
+      "price": 5
+    },
+    {
+      "id": "rc_pack_2",
+      "prop": "diamond",
+      "num": 6,
+      "price": 8
+    },
+    {
+      "id": "rc_pack_3",
+      "prop": "diamond",
+      "num": 9,
+      "price": 11
+    }
+  ]
+}

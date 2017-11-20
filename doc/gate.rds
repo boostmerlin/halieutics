@@ -1,0 +1,17 @@
+game {
+    game:all set(game.title)
+    game:online set(game.title)
+    game:[title]:gates set(gate.id)
+}
+
+gate {
+    gate:id:counter number
+
+    gate:[id]
+        game string
+        host string
+        port number
+        maxload number
+}
+
+

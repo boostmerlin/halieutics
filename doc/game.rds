@@ -1,0 +1,45 @@
+# index : math.floor(id / 1024)
+
+guid {
+    desk:guid:counter
+    desk:game:guid:counter
+}
+
+desk {
+    desk:active set(deskid)
+
+    desk:[id]:info json
+
+    desk:[id]:attr
+        [start] number
+        [count] number
+
+    desk:[id]:seat map
+        [seat] [userid]
+
+    desk:[id]:cost json map
+        [userid] [card]
+
+    desk:[id]:user map
+        [userid] json {
+            score number
+            sum number
+            win number
+        }
+
+}
+
+
+login:lastest zset(userid)
+
+
+notice {
+    notice:id:counter number
+    notice:list (notice.id)
+    notice:[index]:info
+        [notice.id] json {
+            from number     # from = 0 : system
+            content string
+        }
+}
+

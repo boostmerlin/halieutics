@@ -1,0 +1,25 @@
+skynet_lualib_path = "$SKYNET_PATH/lualib/?.lua"
+skynet_luaclib_path = "$SKYNET_PATH/luaclib/?.so"
+skynet_service_path = "$SKYNET_PATH/service/?.lua"
+skynet_cservice_path = "$SKYNET_PATH/cservice/?.so"
+
+thread = $SKYNET_THREAD 
+logpath = "$LOGPATH"
+loglevel = "$LOGLEVEL"
+harbor = 0
+start = "main"
+lualoader = "$ROOT/skynet/lualib/loader.lua"
+luaservice = "$ROOT/client/?.lua;$ROOT/service/common/?.lua;"..skynet_service_path
+lua_path = "$ROOT/client/?.lua;$ROOT/lualib/?.lua;"..skynet_lualib_path
+lua_cpath = "$ROOT/luaclib/?.so;"..skynet_luaclib_path
+cpath = "$ROOT/cservice/?.so;"..skynet_cservice_path
+if $DAEMON then
+	logger = "$LOGFILE" 
+	daemon = "$PIDFILE"
+end
+
+proto_path = "$PROTO_PATH"
+robot_mode = "$ROBOT_MODE"
+server_address = "$SERVER_ADDRESS"
+simulator = "$SIMULATOR"
+
